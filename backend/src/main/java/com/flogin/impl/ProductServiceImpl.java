@@ -37,4 +37,51 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAll() {
-        return repo.findAll().stream()
+        return repo.findAll().stream() .map(p -> new ProductDto(p.getId(), p.getName(), p.getPrice(), p.getQuantity(), p.getCategory()))
+                .collect(Collectors.toList());
+    }
+
+    public Page<ProductDto> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Product> productPage = repo.findAll(pageable);
+
+        return productPage.map(p -> new ProductDto(
+                p.getId(),
+                p.getName(),
+                p.getPrice(),
+                p.getQuantity(),
+                p.getCategory()));
+    }
+
+    @Override
+    public ProductDto getProductById(Long id) {
+        Product p = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+        return new ProductDto(p.getId(), p.getName(), p.getPrice(), p.getQuantity(), p.getCategory());
+    }
+
+    @Override
+    public ProductDto updateProduct(Long id, ProductDto dto) {
+        Product p = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+
+        p.setName(dto.getName());
+        p.setPrice(dto.getPrice());
+        p.setQuantity(dto.getQuantity());
+        p.setCategory(dto.getCategory());
+
+        Product updated = repo.save(p);
+        return new ProductDto(updated.getId(), updated.getName(), updated.getPrice(), updated.getQuantity(),
+                updated.getCategory());
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("Product not found with id: " + id);
+        }
+        repo.deleteById(id);
+    }
+
+}
