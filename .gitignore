@@ -1,3 +1,24 @@
 # Node
 node_modules/
 npm-debug.log
+yarn-error.log
+
+# Jest coverage
+coverage/
+
+# Docker
+*.env
+docker-compose.override.yml
+postgres_data/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Maven
+target/
+
+# Gradle
+build/
+
