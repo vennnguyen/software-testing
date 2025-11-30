@@ -1903,10 +1903,61 @@ Implement POM cho Product pages:
   innertopmargin=10pt,innerbottommargin=10pt]
 
 \begin{lstlisting}[caption={Implement POM cho Product pages }, captionpos=b]
+class ProductPage {
+  visit() {
+    cy.visit("/product-list");
+  }
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+  clickAddNew() {
+    cy.get('[data-testid="add-new-btn"]').click();
+  }
+
+  openFormModal() {
+    cy.get('[data-testid="modal-overlay"]').should(
+      "be.visible"
+    );
+  }
+
+  closeFormModal() {
+    cy.get('[data-testid="close-modal-btn"]').click();
+  }
+
+  fillProductForm(product) {
+    cy.get('[data-testid="product-name-input"]').clear().type(product.name);
+    cy.get('[data-testid="product-price-input"]').clear().type(product.price);
+  }
+
+  submitForm() {
+    cy.get('[data-testid="submit-btn"]').click();
+  }
+
+  getSuccessMessage() {
+    return cy.get('[data-testid="success-message"]');
+  }
+
+  getProductInList(name) {
+    return cy.contains('[data-testid="product-item"]', name);
+  }
+
+  clickEditButton(name) {
+    this.getProductInList(name).find('[data-testid^="edit-btn-"]').click();
+  }
+
+  clickDeleteButton(name) {
+    this.getProductInList(name).find('[data-testid^="delete-btn-"]').click();
+  }
+
+  fillSearchInput(keyword) {
+    cy.get('[data-testid="search-input"]').clear().type(keyword);
+  }
+
+  selectSortByNewest() {
+    cy.get('[data-testid="sort-select"]').select("id-desc");
+  }
+}
+
+export default ProductPage;
+
 
 \end{lstlisting}
 \end{mdframed}
@@ -1915,89 +1966,214 @@ Implement POM cho Product pages:
 
 Viết automated tests cho CRUD operations:
 
-
-a) Test Create product flow (0.5 điểm)
 \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
   innerleftmargin=10pt,innerrightmargin=10pt,
   innertopmargin=10pt,innerbottommargin=10pt]
 
-\begin{lstlisting}[caption={Test Create product flow }, captionpos=b]
+\begin{lstlisting}[caption={Các test complete login flow: product.cy.js }, captionpos=b]
+// Dựa trên Listing 16
+import ProductPage from "../pages/ProductPage";
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+const NEW_PRODUCT_DATA = {
+  name: "Laptop HP Spectre X360 (Test)",
+  price: "35000000",
+  quantity: "3",
+};
+
+const UPDATE_PRODUCT_DATA = {
+  price: "33000000",
+};
+
+describe("Product E2E Tests (Sử dụng data-testid)", () => {
+  const productPage = new ProductPage();
+
+  beforeEach(() => {
+    productPage.visit();
+  });
+
+  // a) Test Create product flow (0.5 điểm)
+  it("Nên tạo sản phẩm mới thành công (Create)", () => {
+    productPage.clickAddNew();
+    productPage.openFormModal();
+
+    productPage.fillProductForm(NEW_PRODUCT_DATA);
+    productPage.submitForm();
+
+    productPage.getSuccessMessage().should("contain", "Thêm mới thành công!");
+    productPage.getProductInList(NEW_PRODUCT_DATA.name).should("exist");
+  });
+
+  // b) Test Read/List products (0.5 điểm)
+  it("Nên hiển thị sản phẩm vừa tạo trong danh sách", () => {
+    // Đảm bảo sản phẩm tồn tại trước khi test
+    productPage.getProductInList(NEW_PRODUCT_DATA.name).should("be.visible");
+  });
+
+  // e) Test Search/Filter functionality (0.5 điểm)
+  it("Nên tìm kiếm sản phẩm theo từ khóa", () => {
+    productPage.fillSearchInput("HP Spectre");
+
+    productPage.getProductInList("Laptop HP Spectre X360").should("exist");
+    productPage.getProductInList("Chuột Logitech").should("not.exist");
+  });
+
+  // c) Test Update product (0.5 điểm)
+  it("Nên cập nhật sản phẩm thành công (Update)", () => {
+    // 1. Click nút Sửa
+    productPage.clickEditButton(NEW_PRODUCT_DATA.name);
+    productPage.openFormModal();
+
+    // 2. Cập nhật giá
+    productPage.fillProductForm({
+      name: NEW_PRODUCT_DATA.name,
+      price: UPDATE_PRODUCT_DATA.price,
+    });
+
+    // 3. Submit form
+    productPage.submitForm();
+
+    // 4. Kiểm tra thông báo thành công
+    productPage.getSuccessMessage().should("contain", "Cập nhật thành công!");
+
+    // 5. Kiểm tra giá trị mới trong danh sách
+    const formattedPrice = UPDATE_PRODUCT_DATA.price.toLocaleString();
+    productPage
+      .getProductInList(NEW_PRODUCT_DATA.name)
+      .invoke("text")
+      .should("contain", UPDATE_PRODUCT_DATA.price.toLocaleString());
+  });
+
+  // d) Test Delete product (0.5 điểm)
+  it("Nên xóa sản phẩm thành công (Delete)", () => {
+    productPage.clickDeleteButton(NEW_PRODUCT_DATA.name);
+    productPage.getSuccessMessage().should("contain", "Xóa thành công!");
+    productPage.getProductInList(NEW_PRODUCT_DATA.name).should("not.exist");
+  });
+});
+
 
 \end{lstlisting}
 \end{mdframed}
-b) Test Read/List products (0.5 điểm)
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
-
-\begin{lstlisting}[caption={Test Read/List products}, captionpos=b]
-
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
-
-\end{lstlisting}
-\end{mdframed}
-c) Test Update product (0.5 điểm)
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
-
-\begin{lstlisting}[caption={Test  Update product }, captionpos=b]
-
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
-
-\end{lstlisting}
-\end{mdframed}
-d) Test Delete product (0.5 điểm)
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
-
-\begin{lstlisting}[caption={Test Delete product }, captionpos=b]
-
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
-
-\end{lstlisting}
-\end{mdframed}
-e) Test Search/Filter functionality (0.5 điểm)
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
-
-\begin{lstlisting}[caption={Test Search/Filter functionality  }, captionpos=b]
-
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
-
-\end{lstlisting}
-\end{mdframed}
-
 
 \subsubsection{6.2.3 CI/CD Integration (1.5 điểm)}
 
-Setup complete CI/CD pipeline:
+\begin{itemize}
+    \item Tạo GitHub Actions workflow
 \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
   innerleftmargin=10pt,innerrightmargin=10pt,
   innertopmargin=10pt,innerbottommargin=10pt]
 
-\begin{lstlisting}[caption={Setup complete CI/CD pipeline }, captionpos=b]
+\begin{lstlisting}[caption={product.cy.js}, captionpos=b]
+name: Product Tests CI
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-product:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # --- Setup Java & Backend ---
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Make Maven wrapper executable
+        run: chmod +x ./backend/mvnw
+
+      - name: Start Backend in Background (Port 8080)
+        run: |
+          cd backend
+          ./mvnw spring-boot:run &
+          sleep 20
+
+      # --- Setup Node & Frontend ---
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Start Frontend in Background (Port 5173)
+        run: |
+          cd frontend
+          npm run build
+          npm install -g serve
+          serve -s dist -l 5173 &
+          sleep 10
+
+      # --- Run Product E2E Tests ---
+      - name: Run Product E2E Tests
+        run: |
+          cd frontend
+          npm run test:e2e:spec -- "cypress/e2e/product.cy.js"
+        env:
+          BASE_URL: http://localhost:5173
+
+      # --- Upload Product Test Reports ---
+      - name: Upload Product Test Reports
+        # uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
+        with:
+          name: product-test-reports
+          path: frontend/reports/
 
 \end{lstlisting}
 \end{mdframed}
+    \item Generate test reports
+\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
+  innerleftmargin=10pt,innerrightmargin=10pt,
+  innertopmargin=10pt,innerbottommargin=10pt]
+
+\begin{lstlisting}[caption={Generate test reports}, captionpos=b]
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="4.937" tests="5" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-11-30T11:15:27" tests="0" file="cypress\e2e\product.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Product E2E Tests (Sử dụng data-testid)" timestamp="2025-11-30T11:15:27" tests="5" time="4.933" failures="0">
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên tạo sản phẩm mới thành công (Create)" time="1.423" classname="Nên tạo sản phẩm mới thành công (Create)">
+    </testcase>
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên hiển thị sản phẩm vừa tạo trong danh sách" time="1.547" classname="Nên hiển thị sản phẩm vừa tạo trong danh sách">
+    </testcase>
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên tìm kiếm sản phẩm theo từ khóa" time="0.461" classname="Nên tìm kiếm sản phẩm theo từ khóa">
+    </testcase>
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên cập nhật sản phẩm thành công (Update)" time="1.202" classname="Nên cập nhật sản phẩm thành công (Update)">
+    </testcase>
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên xóa sản phẩm thành công (Delete)" time="0.190" classname="Nên xóa sản phẩm thành công (Delete)">
+    </testcase>
+  </testsuite>
+</testsuites>
+\end{lstlisting}
+\end{mdframed}
+%     \item Generate test reports
+% \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
+%   innerleftmargin=10pt,innerrightmargin=10pt,
+%   innertopmargin=10pt,innerbottommargin=10pt]
+
+% \begin{lstlisting}[caption={Generate test reports }, captionpos=b]
+
+%         VIET TEST VAO
+%         VIET TEST VAO
+%         VIET TEST VAO
+
+% \end{lstlisting}
+% \end{mdframed}
+\end{itemize}
+
+
+
 
 \section{Phần Mở Rộng (Bonus 20 điểm)}
 
