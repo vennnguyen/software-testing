@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-import ProductList from "./components/ProductList";
-import ProductForm from "./components/ProductForm";
+import ProductList from "./ProductList";
+import ProductForm from "./ProductForm";
 
 import * as productService from "../services/productService";
 import * as productValidation from "../utils/productValidation";

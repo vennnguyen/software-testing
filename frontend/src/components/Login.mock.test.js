@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'; //
-import Login from './components/Login'; //
+import Login from './Login'; //
 
 // 1. Import các hàm chúng ta cần giả lập (mock)
 import { validateUsername, validatePassword } from '../utils/validation';

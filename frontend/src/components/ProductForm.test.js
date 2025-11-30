@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import * as productService from "../services/productService";
-import ProductForm from "./components/ProductForm";
+import ProductForm from "./ProductForm";
 
 // Mock service
 jest.mock("../services/productService");
