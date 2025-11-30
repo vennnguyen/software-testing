@@ -1493,17 +1493,17 @@ c) Verify repository interactions (0.5 điểm)
 
 
 \begin{itemize}
-    \item Cài đặt Cypress
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
+    \item Cài đặt Cypress: \textbf{npm install cypress --save-dev}
 
-\begin{lstlisting}[caption={Cài đặt Cypress}, captionpos=b]
+% \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
+%   innerleftmargin=10pt,innerrightmargin=10pt,
+%   innertopmargin=10pt,innerbottommargin=10pt]
 
-npm install cypress --save-dev
+% \begin{lstlisting}[caption={Cài đặt Cypress}, captionpos=b]
 
-\end{lstlisting}
-\end{mdframed}
+
+% \end{lstlisting}
+% \end{mdframed}
 
     \item Cấu hình test environment
 \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
@@ -1511,92 +1511,261 @@ npm install cypress --save-dev
   innertopmargin=10pt,innerbottommargin=10pt]
 
 \begin{lstlisting}[caption={ Cấu hình test environment}, captionpos=b]
+const { defineConfig } = require("cypress");
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+module.exports = defineConfig({
+  e2e: {
+    baseUrl: "http://localhost:5173",
+    setupNodeEvents(on, config) {
+      // implement node event listeners here
+    },
+  },
+});
 
 \end{lstlisting}
 \end{mdframed}
 
 
     \item Setup Page Object Model
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
 
-\begin{lstlisting}[caption={ Setup Page Object Model}, captionpos=b]
+\begin{itemize}
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+    % ---------- ITEM CON 1 ----------
+    \item LoginPage.js
 
-\end{lstlisting}
-\end{mdframed}
+    \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
+      innerleftmargin=10pt,innerrightmargin=10pt,
+      innertopmargin=10pt,innerbottommargin=10pt]
+
+    \begin{lstlisting}[caption={Tạo cấu trúc POM}, captionpos=b]
+class LoginPage {
+  // Selectors
+  usernameInput = '[data-testid="username-input"]';
+  passwordInput = '[data-testid="password-input"]';
+  loginButton = '[data-testid="login-button"]';
+  loginMessage = '[data-testid="login-message"]';
+  usernameError = '[data-testid="username-error"]';
+
+  // Actions
+  visit() {
+    cy.visit("/login");
+  }
+
+  fillLoginForm(username, password) {
+    cy.get(this.usernameInput).type(username);
+    cy.get(this.passwordInput).type(password);
+  }
+
+  submit() {
+    cy.get(this.loginButton).click();
+  }
+
+  getLoginMessage() {
+    return cy.get(this.loginMessage);
+  }
+
+  getUsernameError() {
+    return cy.get(this.usernameError);
+  }
+}
+
+export default new LoginPage();
+
+    \end{lstlisting}
+
+    \end{mdframed}
+
+
+    % ---------- ITEM CON 2 ----------
+    \item ProductPage.js
+
+    \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
+      innerleftmargin=10pt,innerrightmargin=10pt,
+      innertopmargin=10pt,innerbottommargin=10pt]
+
+    \begin{lstlisting}[caption={Class cho từng Page}, captionpos=b]
+class ProductPage {
+  visit() {
+    cy.visit("/product-list");
+  }
+
+  clickAddNew() {
+    cy.get('[data-testid="add-new-btn"]').click();
+  }
+
+  openFormModal() {
+    cy.get('[data-testid="modal-overlay"]').should(
+      "be.visible"
+    );
+  }
+
+  closeFormModal() {
+    cy.get('[data-testid="close-modal-btn"]').click();
+  }
+
+  fillProductForm(product) {
+    cy.get('[data-testid="product-name-input"]').clear().type(product.name);
+    cy.get('[data-testid="product-price-input"]').clear().type(product.price);
+  }
+
+  submitForm() {
+    cy.get('[data-testid="submit-btn"]').click();
+  }
+
+  getSuccessMessage() {
+    return cy.get('[data-testid="success-message"]');
+  }
+
+  getProductInList(name) {
+    return cy.contains('[data-testid="product-item"]', name);
+  }
+
+  clickEditButton(name) {
+    this.getProductInList(name).find('[data-testid^="edit-btn-"]').click();
+  }
+
+  clickDeleteButton(name) {
+    this.getProductInList(name).find('[data-testid^="delete-btn-"]').click();
+  }
+
+  fillSearchInput(keyword) {
+    cy.get('[data-testid="search-input"]').clear().type(keyword);
+  }
+
+  selectSortByNewest() {
+    cy.get('[data-testid="sort-select"]').select("id-desc");
+  }
+}
+
+export default ProductPage;
+
+    \end{lstlisting}
+
+    \end{mdframed}
+
 \end{itemize}
 
 
-
+\end{itemize}
 
 
 \subsubsection{6.1.2 E2E Test Scenarios cho Login (2.5 điểm)}
 
 Viết automated tests cho toàn bộ login flow:
 
-a) Test complete login flow (1 điểm)
+% a) Test complete login flow (1 điểm)
 \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
   innerleftmargin=10pt,innerrightmargin=10pt,
   innertopmargin=10pt,innerbottommargin=10pt]
 
-\begin{lstlisting}[caption={Các test complete login flow}, captionpos=b]
+\begin{lstlisting}[caption={Các test complete login flow: login.cy.js}, captionpos=b]
+import LoginPage from "../pages/LoginPage";
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+describe("Login E2E Tests (5.1.2)", () => {
+  beforeEach(() => {
+    LoginPage.visit();
+  });
+
+  it("TC1: Hiển thị form login và kiểm tra tương tác cơ bản", () => {
+    cy.get(LoginPage.usernameInput)
+      .should("be.visible")
+      .and("have.attr", "type", "text");
+    cy.get(LoginPage.passwordInput)
+      .should("be.visible")
+      .and("have.attr", "type", "password");
+    cy.get(LoginPage.loginButton).should("be.visible").and("be.enabled");
+
+    cy.get(LoginPage.usernameInput).type("temp").should("have.value", "temp");
+    cy.get(LoginPage.usernameInput).clear().should("have.value", "");
+  });
+
+  it("TC2: Đăng nhập thành công với credentials hợp lệ", () => {
+    LoginPage.fillLoginForm("admin", "Test123");
+    LoginPage.submit();
+
+    LoginPage.getLoginMessage().should("contain", "Đăng nhập thành công");
+
+  });
+
+  it("TC3: Đăng nhập thất bại với credentials sai (API Error)", () => {
+    LoginPage.fillLoginForm("testuser", "WrongPass456");
+    LoginPage.submit();
+
+    LoginPage.getLoginMessage().should("contain", "Sai thông tin đăng nhập");
+  });
+
+  it("TC4: Hiển thị lỗi validation khi Username quá ngắn (Boundary Test)", () => {
+    LoginPage.fillLoginForm("ab", "Test123");
+    LoginPage.submit();
+
+    LoginPage.getUsernameError()
+      .should("be.visible")
+      .and("contain", "phải có ít nhất 3 ký tự");
+  });
+
+  it("TC5: Hiển thị lỗi validation khi Password không có chữ hoặc số (Negative Test)", () => {
+    LoginPage.fillLoginForm("testuser", "abcdef");
+    LoginPage.submit();
+
+    cy.get('[data-testid="password-error"]')
+      .should("be.visible")
+      .and("contain", "Mật khẩu phải chứa cả chữ và số");
+  });
+
+  it("TC6: Ngăn chặn ký tự đặc biệt không hợp lệ trong Username (Edge Case)", () => {
+    LoginPage.fillLoginForm("user!@#", "Test123");
+    LoginPage.submit();
+
+    LoginPage.getUsernameError()
+      .should("be.visible")
+      .and("contain", "Tên đăng nhập chỉ được chứa a-z, A-Z, 0-9");
+  });
+});
+
 
 \end{lstlisting}
 \end{mdframed}
 
-b) Test validation messages (0.5 điểm)
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
+% b) Test validation messages (0.5 điểm)
+% \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
+%   innerleftmargin=10pt,innerrightmargin=10pt,
+%   innertopmargin=10pt,innerbottommargin=10pt]
 
-\begin{lstlisting}[caption={Các test validation messages}, captionpos=b]
+% \begin{lstlisting}[caption={Các test validation messages}, captionpos=b]
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+%         VIET TEST VAO
+%         VIET TEST VAO
+%         VIET TEST VAO
 
-\end{lstlisting}
-\end{mdframed}
-c) Test success/error flows (0.5 điểm)
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
+% \end{lstlisting}
+% \end{mdframed}
+% c) Test success/error flows (0.5 điểm)
+% \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
+%   innerleftmargin=10pt,innerrightmargin=10pt,
+%   innertopmargin=10pt,innerbottommargin=10pt]
 
-\begin{lstlisting}[caption={Các test success/error flows}, captionpos=b]
+% \begin{lstlisting}[caption={Các test success/error flows}, captionpos=b]
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+%         VIET TEST VAO
+%         VIET TEST VAO
+%         VIET TEST VAO
 
-\end{lstlisting}
-\end{mdframed}
+% \end{lstlisting}
+% \end{mdframed}
 
-d) Test UI elements interactions (0.5 điểm)
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
+% d) Test UI elements interactions (0.5 điểm)
+% \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
+%   innerleftmargin=10pt,innerrightmargin=10pt,
+%   innertopmargin=10pt,innerbottommargin=10pt]
 
-\begin{lstlisting}[caption={Các test UI elements interactions }, captionpos=b]
+% \begin{lstlisting}[caption={Các test UI elements interactions }, captionpos=b]
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+%         VIET TEST VAO
+%         VIET TEST VAO
+%         VIET TEST VAO
 
-\end{lstlisting}
-\end{mdframed}
+% \end{lstlisting}
+% \end{mdframed}
 
 \subsubsection{6.1.3 CI/CD Integration cho Login Tests (1.5 điểm)}
 
@@ -1607,24 +1776,76 @@ d) Test UI elements interactions (0.5 điểm)
   innerleftmargin=10pt,innerrightmargin=10pt,
   innertopmargin=10pt,innerbottommargin=10pt]
 
-\begin{lstlisting}[caption={Tạo GitHub Actions workflow }, captionpos=b]
+\begin{lstlisting}[caption={login.e2e.spec.js}, captionpos=b]
+name: Login Tests CI
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
 
-\end{lstlisting}
-\end{mdframed}
-    \item Run login tests automatically
-\begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
-  innerleftmargin=10pt,innerrightmargin=10pt,
-  innertopmargin=10pt,innerbottommargin=10pt]
+jobs:
+  test-login:
+    runs-on: ubuntu-latest
 
-\begin{lstlisting}[caption={Run login tests automatically }, captionpos=b]
+    steps:
+      - uses: actions/checkout@v2
 
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Make Maven wrapper executable
+        run: chmod +x ./backend/mvnw
+
+      - name: Start Backend in Background (Port 8080)
+        run: |
+          cd backend
+          ./mvnw spring-boot:run &
+          sleep 20
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run Login Unit Tests
+        run: |
+          cd frontend
+          npm test -- --coverage --testPathPatterns Login
+
+      - name: Start Frontend in Background (Port 5173)
+        run: |
+          cd frontend
+          npm run build
+          npm install -g serve
+          serve -s dist -l 5173 &
+          sleep 10
+
+      - name: Run Login E2E Tests
+        run: |
+          cd frontend
+          npm run test:e2e:spec -- "cypress/e2e/login.cy.js"
+        env:
+          BASE_URL: http://localhost:5173
+
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v4
+        # uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: frontend/reports/
+
+
+
 
 \end{lstlisting}
 \end{mdframed}
@@ -1633,14 +1854,41 @@ d) Test UI elements interactions (0.5 điểm)
   innerleftmargin=10pt,innerrightmargin=10pt,
   innertopmargin=10pt,innerbottommargin=10pt]
 
-\begin{lstlisting}[caption={Generate test reports }, captionpos=b]
-
-        VIET TEST VAO
-        VIET TEST VAO
-        VIET TEST VAO
-
+\begin{lstlisting}[caption={Generate test reports}, captionpos=b]
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="4.347" tests="6" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-11-30T11:15:21" tests="0" file="cypress\e2e\login.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Login E2E Tests (5.1.2)" timestamp="2025-11-30T11:15:21" tests="6" time="4.343" failures="0">
+    <testcase name="Login E2E Tests (5.1.2) TC1: Hiển thị form login và kiểm tra tương tác cơ bản" time="0.617" classname="TC1: Hiển thị form login và kiểm tra tương tác cơ bản">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC2: Đăng nhập thành công với credentials hợp lệ" time="0.988" classname="TC2: Đăng nhập thành công với credentials hợp lệ">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC3: Đăng nhập thất bại với credentials sai (API Error)" time="0.739" classname="TC3: Đăng nhập thất bại với credentials sai (API Error)">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC4: Hiển thị lỗi validation khi Username quá ngắn (Boundary Test)" time="0.584" classname="TC4: Hiển thị lỗi validation khi Username quá ngắn (Boundary Test)">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC5: Hiển thị lỗi validation khi Password không có chữ hoặc số (Negative Test)" time="0.630" classname="TC5: Hiển thị lỗi validation khi Password không có chữ hoặc số (Negative Test)">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC6: Ngăn chặn ký tự đặc biệt không hợp lệ trong Username (Edge Case)" time="0.643" classname="TC6: Ngăn chặn ký tự đặc biệt không hợp lệ trong Username (Edge Case)">
+    </testcase>
+  </testsuite>
+</testsuites>
 \end{lstlisting}
 \end{mdframed}
+%     \item Generate test reports
+% \begin{mdframed}[backgroundcolor=green!10,hidealllines=true,
+%   innerleftmargin=10pt,innerrightmargin=10pt,
+%   innertopmargin=10pt,innerbottommargin=10pt]
+
+% \begin{lstlisting}[caption={Generate test reports }, captionpos=b]
+
+%         VIET TEST VAO
+%         VIET TEST VAO
+%         VIET TEST VAO
+
+% \end{lstlisting}
+% \end{mdframed}
 \end{itemize}
 
 
