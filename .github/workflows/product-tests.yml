@@ -52,6 +52,6 @@ jobs:
       - name: Run Product E2E Tests
         run: |
           cd frontend
-          npm run test:e2e:spec -- "cypress/e2e/product.spec.js"
+          npm run test:e2e:spec -- "cypress/e2e/product.cy.js"
         env:
           BASE_URL: http://localhost:5173

@@ -54,6 +54,6 @@ jobs:
       - name: Run Login E2E Tests
         run: |
           cd frontend
-          npm run test:e2e:spec -- "cypress/e2e/login.spec.js"
+          npm run test:e2e:spec -- "cypress/e2e/login.cy.js"
         env:
           BASE_URL: http://localhost:5173
