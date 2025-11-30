@@ -8,7 +8,7 @@ class ProductPage {
   }
 
   openFormModal() {
-    cy.get('div[style*="background-color: rgba(0, 0, 0, 0.6)"]').should(
+    cy.get('[data-testid="modal-overlay"]').should(
       "be.visible"
     );
   }

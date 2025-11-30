@@ -142,9 +142,17 @@ export default function ProductList() {
 
       {/* Modal - Form */}
       {isFormOpen && (
-        <div className="modalBackdrop" onClick={handleCloseForm}>
+        <div
+          className="modalBackdrop"
+          onClick={handleCloseForm}
+          data-testid="modal-overlay"
+        >
           <div className="modalContent" onClick={(e) => e.stopPropagation()}>
-            <button className="closeModalBtn" onClick={handleCloseForm}>
+            <button
+              className="closeModalBtn"
+              onClick={handleCloseForm}
+              // data-testid="close-modal-btn"
+            >
               &times;
             </button>
             <ProductForm
