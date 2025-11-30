@@ -55,3 +55,10 @@ jobs:
           npm run test:e2e:spec -- "cypress/e2e/product.cy.js"
         env:
           BASE_URL: http://localhost:5173
+
+      # --- Upload Product Test Reports ---
+      - name: Upload Product Test Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: product-test-reports
+          path: frontend/reports/

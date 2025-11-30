@@ -7,4 +7,13 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
   },
+
+  reporter: "cypress-multi-reporters",
+
+  reporterOptions: {
+    reporterEnabled: "spec, junit",
+    junitReporterOptions: {
+      mochaFile: "reports/e2e-report-[hash].xml",
+    },
+  },
 });

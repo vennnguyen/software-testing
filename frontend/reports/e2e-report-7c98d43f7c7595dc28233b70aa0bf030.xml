@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="4.909" tests="6" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-11-30T10:59:12" tests="0" file="cypress\e2e\login.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Login E2E Tests (5.1.2)" timestamp="2025-11-30T10:59:12" tests="6" time="4.906" failures="0">
+    <testcase name="Login E2E Tests (5.1.2) TC1: Hiển thị form login và kiểm tra tương tác cơ bản" time="0.722" classname="TC1: Hiển thị form login và kiểm tra tương tác cơ bản">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC2: Đăng nhập thành công với credentials hợp lệ" time="1.411" classname="TC2: Đăng nhập thành công với credentials hợp lệ">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC3: Đăng nhập thất bại với credentials sai (API Error)" time="0.751" classname="TC3: Đăng nhập thất bại với credentials sai (API Error)">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC4: Hiển thị lỗi validation khi Username quá ngắn (Boundary Test)" time="0.575" classname="TC4: Hiển thị lỗi validation khi Username quá ngắn (Boundary Test)">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC5: Hiển thị lỗi validation khi Password không có chữ hoặc số (Negative Test)" time="0.638" classname="TC5: Hiển thị lỗi validation khi Password không có chữ hoặc số (Negative Test)">
+    </testcase>
+    <testcase name="Login E2E Tests (5.1.2) TC6: Ngăn chặn ký tự đặc biệt không hợp lệ trong Username (Edge Case)" time="0.667" classname="TC6: Ngăn chặn ký tự đặc biệt không hợp lệ trong Username (Edge Case)">
+    </testcase>
+  </testsuite>
+</testsuites>

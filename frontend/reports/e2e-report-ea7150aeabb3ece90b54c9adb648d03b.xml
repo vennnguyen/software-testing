@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="6.197" tests="5" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-11-30T11:00:37" tests="0" file="cypress\e2e\product.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Product E2E Tests (Sử dụng data-testid)" timestamp="2025-11-30T11:00:37" tests="5" time="6.191" failures="0">
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên tạo sản phẩm mới thành công (Create)" time="1.442" classname="Nên tạo sản phẩm mới thành công (Create)">
+    </testcase>
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên hiển thị sản phẩm vừa tạo trong danh sách" time="1.560" classname="Nên hiển thị sản phẩm vừa tạo trong danh sách">
+    </testcase>
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên tìm kiếm sản phẩm theo từ khóa" time="0.783" classname="Nên tìm kiếm sản phẩm theo từ khóa">
+    </testcase>
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên cập nhật sản phẩm thành công (Update)" time="1.733" classname="Nên cập nhật sản phẩm thành công (Update)">
+    </testcase>
+    <testcase name="Product E2E Tests (Sử dụng data-testid) Nên xóa sản phẩm thành công (Delete)" time="0.438" classname="Nên xóa sản phẩm thành công (Delete)">
+    </testcase>
+  </testsuite>
+</testsuites>

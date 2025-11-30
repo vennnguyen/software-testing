@@ -8,7 +8,7 @@ class LoginPage {
 
   // Actions
   visit() {
-    cy.visit("/login"); 
+    cy.visit("/login");
   }
 
   fillLoginForm(username, password) {
