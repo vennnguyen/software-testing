@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "17"
+          distribution: temurin
+
+      - name: Make Maven wrapper executable
+        run: chmod +x ./backend/mvnw
+
+      - name: Backend Tests
+        run: |
+          cd backend
+          ./mvnw clean test
+
+      - name: Build and Run Backend in Background
+        run: |
+          cd backend
+          ./mvnw spring-boot:run &
+          sleep 20
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Frontend Tests
+        run: |
+          cd frontend
+          npm install
+          npm test -- --coverage
+
+      - name: Start Frontend Application in Background
+        run: |
+          cd frontend
+          npm run dev &
+          sleep 10
+
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v2
+        with:
+          files: |
+            ./frontend/coverage/lcov.info
+            ./backend/target/site/jacoco/jacoco.xml
