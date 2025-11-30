@@ -1,84 +1,200 @@
-/* ProductList.css hoặc ProductList.module.css
-
+/* === Wrapper & Layout === */
 .wrapper {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 40px auto;
   font-family: "Segoe UI", sans-serif;
+  padding: 0 20px;
 }
+
 .container {
-  padding: 25px;
-  background-color: #f9fafb;
+  padding: 30px;
+  background-color: #ffffff;
   border-radius: 12px;
   min-height: 400px;
   margin-top: 30px;
-  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+
+/* === Header === */
 .header {
   text-align: center;
   color: #1f2937;
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 32px;
+  margin-bottom: 30px;
   font-weight: 700;
 }
-.addButton {
-  background-color: #10b981;
-  padding: 10px 15px;
+
+/* === Alerts === */
+.alert {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.alertError {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.alertSuccess {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* === Empty State === */
+.emptyState {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f9fafb;
   border-radius: 8px;
+}
+
+/* === Add Button === */
+.addButton {
+  display: block;
+  margin: 0 auto 30px auto;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 700;
   color: white;
-  font-weight: bold;
+  background-color: #10b981;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s;
-  display: block;
-  margin: 0 auto 20px auto;
 }
+
+/* === Filters === */
 .filterBar {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.searchInput {
-  flex: 1;
-  min-width: 200px;
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  outline: none;
-}
+
+.searchInput,
 .selectInput {
-  padding: 8px 12px;
+  padding: 10px 15px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
-  outline: none;
-  background-color: white;
-  cursor: pointer;
+  font-size: 14px;
 }
+
+.searchInput {
+  flex-grow: 1;
+  min-width: 200px;
+}
+
+/* === Product List === */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9fafb;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid #3b82f6;
+  flex-wrap: wrap;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-grow: 1;
+  min-width: 150px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.price {
+  color: #059669;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.category {
+  font-size: 14px;
+  color: #6b7280;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* === Buttons === */
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+.viewBtn {
+  background-color: #4f46e5;
+}
+
+.editBtn {
+  background-color: #f59e0b;
+}
+
+.deleteBtn {
+  background-color: #ef4444;
+}
+
+/* === Modal === */
 .modalBackdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .modalContent {
   background-color: #fff;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   width: 90%;
-  max-width: 650px;
+  max-width: 600px;
   position: relative;
 }
+
+.detailModal {
+  max-width: 800px;
+}
+
 .closeModalBtn {
   position: absolute;
   top: 10px;
@@ -90,80 +206,20 @@
   color: #9ca3af;
   font-weight: bold;
 }
-.list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 20px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  border-left: 4px solid #3b82f6;
-}
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #111827;
-}
-.price {
-  color: #059669;
-  font-weight: 500;
-  font-size: 16px;
-}
-.category {
-  font-size: 12px;
-  color: #6b7280;
-}
-.actions {
-  display: flex;
-  gap: 8px;
-}
-.btn {
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  color: white;
-  transition: opacity 0.2s;
-}
-.viewBtn {
-  background-color: #8b5cf6;
-}
-.editBtn {
-  background-color: #f59e0b;
-}
-.deleteBtn {
-  background-color: #ef4444;
-}
-.emptyState {
-  text-align: center;
-  color: #6b7280;
-  margin-top: 40px;
-}
+
+/* === Pagination === */
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
-  margin-top: 20px;
+  margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid #e5e7eb;
 }
+
 .pageBtn {
-  padding: 8px 16px;
+  padding: 10px 18px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
   background-color: #ffffff;
@@ -172,13 +228,14 @@
   color: #374151;
   transition: all 0.2s;
 }
+
 .pageBtnDisabled {
   opacity: 0.5;
   cursor: not-allowed;
   background-color: #f3f4f6;
 }
+
 .pageInfo {
   font-weight: 500;
   color: #4b5563;
 }
- */

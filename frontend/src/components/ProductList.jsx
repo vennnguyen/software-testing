@@ -7,222 +7,9 @@ import ProductForm from "./ProductForm";
 import ProductDetail from "./ProductDetail";
 import { toast } from "sonner";
 
+import "./ProductList.css";
+
 const CATEGORIES = ["Electronics", "Books", "Clothing"];
-
-const styles = {
-  wrapper: {
-    maxWidth: "1000px",
-    margin: "40px auto",
-    fontFamily: "'Segoe UI', sans-serif",
-    padding: "0 20px",
-  },
-  container: {
-    padding: "30px",
-    backgroundColor: "#ffffff",
-    borderRadius: "12px",
-    minHeight: "400px",
-    marginTop: "30px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-  },
-  header: {
-    textAlign: "center",
-    color: "#1f2937",
-    fontSize: "32px",
-    marginBottom: "30px",
-    fontWeight: "700",
-  },
-  alert: {
-    padding: "12px 16px",
-    borderRadius: "6px",
-    marginBottom: "20px",
-    textAlign: "center",
-    fontWeight: "600",
-  },
-  alertError: {
-    backgroundColor: "#fee2e2",
-    color: "#991b1b",
-  },
-  alertSuccess: {
-    backgroundColor: "#d1fae5",
-    color: "#065f46",
-  },
-  emptyState: {
-    textAlign: "center",
-    color: "#6b7280",
-    marginTop: "40px",
-    padding: "20px",
-    backgroundColor: "#f9fafb",
-    borderRadius: "8px",
-  },
-
-  addButton: {
-    display: "block",
-    margin: "0 auto 30px auto",
-    padding: "12px 25px",
-    fontSize: "16px",
-    fontWeight: "700",
-    color: "white",
-    backgroundColor: "#10b981",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-    transition: "background-color 0.2s",
-  },
-
-  filterBar: {
-    display: "flex",
-    gap: "10px",
-    marginBottom: "30px",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  searchInput: {
-    flexGrow: 1,
-    padding: "10px 15px",
-    border: "1px solid #d1d5db",
-    borderRadius: "6px",
-    fontSize: "14px",
-    minWidth: "200px",
-  },
-  selectInput: {
-    padding: "10px 15px",
-    border: "1px solid #d1d5db",
-    borderRadius: "6px",
-    fontSize: "14px",
-    backgroundColor: "white",
-    cursor: "pointer",
-  },
-
-  list: {
-    listStyle: "none",
-    padding: 0,
-    margin: 0,
-  },
-  item: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#f9fafb",
-    padding: "15px 20px",
-    marginBottom: "12px",
-    borderRadius: "8px",
-    boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
-    borderLeft: "5px solid #3b82f6",
-    flexWrap: "wrap",
-  },
-  info: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "5px",
-    flexGrow: 1,
-    minWidth: "150px",
-  },
-  name: {
-    fontSize: "18px",
-    fontWeight: "600",
-    color: "#111827",
-  },
-  price: {
-    color: "#059669",
-    fontWeight: "500",
-    fontSize: "16px",
-  },
-  category: {
-    fontSize: "14px",
-    color: "#6b7280",
-    fontStyle: "italic",
-    marginTop: "4px",
-  },
-  actions: {
-    display: "flex",
-    gap: "8px",
-    marginTop: "10px",
-  },
-  btn: {
-    border: "none",
-    padding: "8px 12px",
-    borderRadius: "6px",
-    cursor: "pointer",
-    fontSize: "13px",
-    fontWeight: "600",
-    color: "white",
-    transition: "background-color 0.2s",
-  },
-  viewBtn: {
-    backgroundColor: "#4f46e5",
-  },
-  editBtn: {
-    backgroundColor: "#f59e0b",
-  },
-  deleteBtn: {
-    backgroundColor: "#ef4444",
-  },
-
-  modalBackdrop: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
-    zIndex: 1000,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    backgroundColor: "#fff",
-    padding: "30px",
-    borderRadius: "12px",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
-    width: "90%",
-    maxWidth: "600px",
-    position: "relative",
-  },
-  detailModal: {
-    maxWidth: "800px",
-  },
-  closeModalBtn: {
-    position: "absolute",
-    top: "10px",
-    right: "15px",
-    background: "none",
-    border: "none",
-    fontSize: "28px",
-    cursor: "pointer",
-    color: "#9ca3af",
-    fontWeight: "bold",
-  },
-
-  pagination: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "15px",
-    marginTop: "30px",
-    paddingTop: "20px",
-    borderTop: "1px solid #e5e7eb",
-  },
-  pageBtn: {
-    padding: "10px 18px",
-    border: "1px solid #d1d5db",
-    borderRadius: "6px",
-    backgroundColor: "#ffffff",
-    cursor: "pointer",
-    fontWeight: "600",
-    color: "#374151",
-    transition: "all 0.2s",
-  },
-  pageBtnDisabled: {
-    opacity: 0.5,
-    cursor: "not-allowed",
-    backgroundColor: "#f3f4f6",
-  },
-  pageInfo: {
-    fontWeight: "500",
-    color: "#4b5563",
-  },
-};
 
 export default function ProductList() {
   const [items, setItems] = useState([]);
@@ -344,20 +131,20 @@ export default function ProductList() {
   };
 
   return (
-    <div style={styles.wrapper}>
+    <div className="wrapper">
       <button
-        style={styles.addButton}
+        className="addButton"
         onClick={handleAdd}
         data-testid="add-new-btn"
       >
         + Thêm Sản phẩm mới
       </button>
 
-      {/* Modal Form */}
+      {/* Modal - Form */}
       {isFormOpen && (
-        <div style={styles.modalBackdrop} onClick={handleCloseForm}>
-          <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button style={styles.closeModalBtn} onClick={handleCloseForm}>
+        <div className="modalBackdrop" onClick={handleCloseForm}>
+          <div className="modalContent" onClick={(e) => e.stopPropagation()}>
+            <button className="closeModalBtn" onClick={handleCloseForm}>
               &times;
             </button>
             <ProductForm
@@ -368,15 +155,15 @@ export default function ProductList() {
         </div>
       )}
 
-      {/* Modal Chi tiết */}
+      {/* Modal - Chi tiết */}
       {viewingId && (
-        <div style={styles.modalBackdrop} onClick={() => setViewingId(null)}>
+        <div className="modalBackdrop" onClick={() => setViewingId(null)}>
           <div
-            style={{ ...styles.modalContent, ...styles.detailModal }}
+            className="modalContent detailModal"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              style={styles.closeModalBtn}
+              className="closeModalBtn"
               onClick={() => setViewingId(null)}
             >
               &times;
@@ -386,38 +173,35 @@ export default function ProductList() {
         </div>
       )}
 
-      <div style={styles.container} data-aos="fade-up">
-        <h2 style={styles.header}>Danh sách Sản phẩm</h2>
+      <div className="container" data-aos="fade-up">
+        <h2 className="header">Danh sách Sản phẩm</h2>
+
         {error && (
-          <div
-            data-testid="error-message"
-            style={{ ...styles.alert, ...styles.alertError }}
-          >
+          <div className="alert alertError" data-testid="error-message">
             {error}
           </div>
         )}
+
         {successMsg && (
-          <div
-            data-testid="success-message"
-            style={{ ...styles.alert, ...styles.alertSuccess }}
-          >
+          <div className="alert alertSuccess" data-testid="success-message">
             {successMsg}
           </div>
         )}
-        {/* --- THANH LỌC & SORT --- */}
-        <div style={styles.filterBar}>
+
+        {/* Filters */}
+        <div className="filterBar">
           <input
             type="text"
             placeholder="Tìm theo tên..."
             value={search}
             onChange={handleSearchChange}
-            style={styles.searchInput}
+            className="searchInput"
             data-testid="search-input"
           />
           <select
             value={category}
             onChange={handleCategoryChange}
-            style={styles.selectInput}
+            className="selectInput"
             data-testid="category-filter"
           >
             <option value="">Tất cả danh mục</option>
@@ -427,10 +211,11 @@ export default function ProductList() {
               </option>
             ))}
           </select>
+
           <select
             value={`${sortBy}-${sortDir}`}
             onChange={handleSortChange}
-            style={styles.selectInput}
+            className="selectInput"
             data-testid="sort-select"
           >
             <option value="id-asc">Mặc định (Cũ nhất)</option>
@@ -440,40 +225,43 @@ export default function ProductList() {
             <option value="name-asc">Tên: A-Z</option>
           </select>
         </div>
-        <ul style={styles.list} data-testid="product-list">
+
+        {/* List */}
+        <ul className="list" data-testid="product-list">
           {items.map((p, index) => (
             <li
               key={p.id}
-              style={styles.item}
+              className="item"
               data-aos="fade-right"
               data-aos-delay={index * 100}
               data-testid="product-item"
             >
-              <div style={styles.info}>
-                <span style={styles.name}>{p.name}</span>
-                <span style={styles.price}>
-                  {p.price || 0} VNĐ
-                </span>
-                <span style={styles.category}>{p.category}</span>
+              <div className="info">
+                <span className="name">{p.name}</span>
+                <span className="price">{p.price || 0} VNĐ</span>
+                <span className="category">{p.category}</span>
               </div>
-              <div style={styles.actions}>
+
+              <div className="actions">
                 <button
+                  className="btn viewBtn"
                   onClick={() => setViewingId(p.id)}
-                  style={{ ...styles.btn, ...styles.viewBtn }}
                   data-testid={`view-btn-${p.id}`}
                 >
                   Chi tiết
                 </button>
+
                 <button
+                  className="btn editBtn"
                   onClick={() => handleEdit(p.id)}
-                  style={{ ...styles.btn, ...styles.editBtn }}
                   data-testid={`edit-btn-${p.id}`}
                 >
                   Sửa
                 </button>
+
                 <button
+                  className="btn deleteBtn"
                   onClick={() => handleDelete(p.id)}
-                  style={{ ...styles.btn, ...styles.deleteBtn }}
                   data-testid={`delete-btn-${p.id}`}
                 >
                   Xóa
@@ -482,30 +270,30 @@ export default function ProductList() {
             </li>
           ))}
         </ul>
+
         {items.length === 0 && (
-          <p style={styles.emptyState}>Không tìm thấy sản phẩm nào.</p>
+          <p className="emptyState">Không tìm thấy sản phẩm nào.</p>
         )}
-        {/* --- PHÂN TRANG --- */}
+
+        {/* Pagination */}
         {totalPages > 1 && (
-          <div style={styles.pagination} data-testid="pagination-controls">
+          <div className="pagination" data-testid="pagination-controls">
             <button
-              style={{
-                ...styles.pageBtn,
-                ...(page === 0 ? styles.pageBtnDisabled : {}),
-              }}
+              className={`pageBtn ${page === 0 ? "pageBtnDisabled" : ""}`}
               onClick={handlePrev}
               disabled={page === 0}
             >
               &laquo; Trước
             </button>
-            <span style={styles.pageInfo}>
+
+            <span className="pageInfo">
               Trang {page + 1} / {totalPages}
             </span>
+
             <button
-              style={{
-                ...styles.pageBtn,
-                ...(page >= totalPages - 1 ? styles.pageBtnDisabled : {}),
-              }}
+              className={`pageBtn ${
+                page >= totalPages - 1 ? "pageBtnDisabled" : ""
+              }`}
               onClick={handleNext}
               disabled={page >= totalPages - 1}
               data-testid="next-btn"
