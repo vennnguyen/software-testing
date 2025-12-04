@@ -22,3 +22,5 @@ target/
 # Gradle
 build/
 
+# report
+reports/
