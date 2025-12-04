@@ -12,7 +12,8 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test:e2e": "npm run cy:run",
-    "test:e2e:spec": "cypress run --spec \"cypress/e2e/login.cy.js,cypress/e2e/product.cy.js\""
+    "test:e2e:spec": "cypress run --spec",
+    "test:e2e:spec-full": "cypress run --spec \"cypress/e2e/login.cy.js,cypress/e2e/product.cy.js\""
   },
   "dependencies": {
     "aos": "^2.3.4",
