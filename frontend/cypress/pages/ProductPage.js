@@ -1,16 +1,16 @@
 class ProductPage {
-  addNewButton = '[data-testid="add-new-btn"]'
-  modal = '[data-testid="modal-overlay"]'
-  closeModel = '[data-testid="close-modal-btn"]'
-  nameProductInput = '[data-testid="product-name-input"]'
-  priceProductInput = '[data-testid="product-price-input"]'
-  submitButton = '[data-testid="submit-btn"]'
-  successMessage = '[data-testid="success-message"]'
-  productItem = '[data-testid="product-item"]'
-  editButton = '[data-testid^="edit-btn-"]'
-  deleteButton = '[data-testid^="delete-btn-"]'
-  searchInput = '[data-testid="search-input"]'
-  sortSelect = '[data-testid="sort-select"]'
+  addNewButton = '[data-testid="add-new-btn"]';
+  modal = '[data-testid="modal-overlay"]';
+  closeModel = '[data-testid="close-modal-btn"]';
+  nameProductInput = '[data-testid="product-name-input"]';
+  priceProductInput = '[data-testid="product-price-input"]';
+  submitButton = '[data-testid="submit-btn"]';
+  successMessage = '[data-testid="success-message"]';
+  productItem = '[data-testid="product-item"]';
+  editButton = '[data-testid^="edit-btn-"]';
+  deleteButton = '[data-testid^="delete-btn-"]';
+  searchInput = '[data-testid="search-input"]';
+  sortSelect = '[data-testid="sort-select"]';
 
   visit() {
     cy.visit("/product-list");
@@ -62,4 +62,4 @@ class ProductPage {
   }
 }
 
-export default ProductPage;
+export default new ProductPage();

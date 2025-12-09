@@ -25,8 +25,8 @@ class LoginPage {
   }
 
   fillLoginForm(username, password) {
-    this.getUsernameInput.type(username);
-    this.getPasswordInput.type(password);
+    this.getUsernameInput().type(username);
+    this.getPasswordInput().type(password);
   }
 
   submit() {

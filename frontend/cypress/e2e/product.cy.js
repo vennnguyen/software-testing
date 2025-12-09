@@ -12,68 +12,67 @@ const UPDATE_PRODUCT_DATA = {
 };
 
 describe("Product E2E Tests (Sử dụng data-testid)", () => {
-  const productPage = new ProductPage();
-
   beforeEach(() => {
-    productPage.visit();
+    ProductPage.visit();
   });
 
-  // a) Test Create product flow (0.5 điểm)
+  // Test Create product
   it("Nên tạo sản phẩm mới thành công (Create)", () => {
-    productPage.clickAddNew();
-    productPage.shouldModalBeVisible();
+    ProductPage.clickAddNew();
+    ProductPage.shouldModalBeVisible();
 
-    productPage.fillProductForm(NEW_PRODUCT_DATA);
-    productPage.submitForm();
+    ProductPage.fillProductForm(NEW_PRODUCT_DATA);
+    ProductPage.submitForm();
 
-    productPage.getSuccessMessage().should("contain", "Thêm mới thành công!");
-    productPage.getProductInList(NEW_PRODUCT_DATA.name).should("exist");
+    ProductPage.getSuccessMessage().should("contain", "Thêm mới thành công!");
+    ProductPage.getProductInList(NEW_PRODUCT_DATA.name).should("exist");
   });
 
-  // b) Test Read/List products (0.5 điểm)
+  // Test Read/List products
   it("Nên hiển thị sản phẩm vừa tạo trong danh sách", () => {
     // Đảm bảo sản phẩm tồn tại trước khi test
-    productPage.getProductInList(NEW_PRODUCT_DATA.name).should("be.visible");
+    ProductPage.getProductInList(NEW_PRODUCT_DATA.name).should("be.visible");
   });
 
-  // e) Test Search/Filter functionality (0.5 điểm)
-  it("Nên tìm kiếm sản phẩm theo từ khóa", () => {
-    productPage.fillSearchInput("HP Spectre");
-
-    productPage.getProductInList("Laptop HP Spectre X360").should("exist");
-    productPage.getProductInList("Chuột Logitech").should("not.exist");
-  });
-
-  // c) Test Update product (0.5 điểm)
+  // Test Update product
   it("Nên cập nhật sản phẩm thành công (Update)", () => {
     // 1. Click nút Sửa
-    productPage.clickEditButton(NEW_PRODUCT_DATA.name);
-    productPage.shouldModalBeVisible();
+    ProductPage.clickEditButton(NEW_PRODUCT_DATA.name);
+    ProductPage.shouldModalBeVisible();
 
     // 2. Cập nhật giá
-    productPage.fillProductForm({
+    ProductPage.fillProductForm({
       name: NEW_PRODUCT_DATA.name,
       price: UPDATE_PRODUCT_DATA.price,
     });
 
     // 3. Submit form
-    productPage.submitForm();
+    ProductPage.submitForm();
 
     // 4. Kiểm tra thông báo thành công
-    productPage.getSuccessMessage().should("contain", "Cập nhật thành công!");
+    ProductPage.getSuccessMessage().should("contain", "Cập nhật thành công!");
 
     // 5. Kiểm tra giá trị mới trong danh sách
     const formattedPrice = UPDATE_PRODUCT_DATA.price.toLocaleString();
-    productPage
-      .getProductInList(NEW_PRODUCT_DATA.name)
+    ProductPage.getProductInList(NEW_PRODUCT_DATA.name)
+      // Lấy toàn bộ text bên trong element .product-item.
       .invoke("text")
-      .should("contain", UPDATE_PRODUCT_DATA.price.toLocaleString());
+      .should("contain", formattedPrice);
   });
 
-  // d) Test Delete product (0.5 điểm)
+  // Test Search/Filter functionality
+  it("Nên tìm kiếm sản phẩm theo từ khóa", () => {
+    ProductPage.fillSearchInput("HP Spectre");
+
+    ProductPage.getProductInList("Laptop HP Spectre X360").should("exist");
+    ProductPage.getProductInList("Chuột Logitech").should("not.exist");
+  });
+
+  // Test Delete product
   it("Nên xóa sản phẩm thành công (Delete)", () => {
-    productPage.clickDeleteButton(NEW_PRODUCT_DATA.name);
-    productPage.getSuccessMessage().should("contain", "Xóa thành công!");
-    productPage.getProductInList(NEW_PRODUCT_DATA.name).should("not.exist");
+    ProductPage.clickDeleteButton(NEW_PRODUCT_DATA.name);
+    ProductPage.getSuccessMessage().should("contain", "Xóa thành công!");
+
+    ProductPage.getProductInList(NEW_PRODUCT_DATA.name).should("not.exist");
   });
 });
