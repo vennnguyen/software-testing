@@ -5,15 +5,28 @@ class LoginPage {
   loginButton = '[data-testid="login-button"]';
   loginMessage = '[data-testid="login-message"]';
   usernameError = '[data-testid="username-error"]';
+  passwordError = '[data-testid="password-error"]';
 
   // Actions
   visit() {
     cy.visit("/login");
   }
 
+  getUsernameInput() {
+    return cy.get(this.usernameInput);
+  }
+
+  getPasswordInput() {
+    return cy.get(this.passwordInput);
+  }
+
+  getLoginButton() {
+    return cy.get(this.loginButton);
+  }
+
   fillLoginForm(username, password) {
-    cy.get(this.usernameInput).type(username);
-    cy.get(this.passwordInput).type(password);
+    this.getUsernameInput.type(username);
+    this.getPasswordInput.type(password);
   }
 
   submit() {
@@ -26,6 +39,10 @@ class LoginPage {
 
   getUsernameError() {
     return cy.get(this.usernameError);
+  }
+
+  getPasswordError() {
+    return cy.get(this.passwordError);
   }
 }
 

@@ -6,16 +6,16 @@ describe("Login E2E Tests (5.1.2)", () => {
   });
 
   it("TC1: Hiển thị form login và kiểm tra tương tác cơ bản", () => {
-    cy.get(LoginPage.usernameInput)
+    LoginPage.getUsernameInput
       .should("be.visible")
       .and("have.attr", "type", "text");
-    cy.get(LoginPage.passwordInput)
+    LoginPage.getPasswordInput
       .should("be.visible")
       .and("have.attr", "type", "password");
-    cy.get(LoginPage.loginButton).should("be.visible").and("be.enabled");
+    LoginPage.getLoginButton.should("be.visible").and("be.enabled");
 
-    cy.get(LoginPage.usernameInput).type("temp").should("have.value", "temp");
-    cy.get(LoginPage.usernameInput).clear().should("have.value", "");
+    LoginPage.getUsernameInput.type("temp").should("have.value", "temp");
+    LoginPage.getUsernameInput.clear().should("have.value", "");
   });
 
   it("TC2: Đăng nhập thành công với credentials hợp lệ", () => {
@@ -23,7 +23,6 @@ describe("Login E2E Tests (5.1.2)", () => {
     LoginPage.submit();
 
     LoginPage.getLoginMessage().should("contain", "Đăng nhập thành công");
-
   });
 
   it("TC3: Đăng nhập thất bại với credentials sai (API Error)", () => {

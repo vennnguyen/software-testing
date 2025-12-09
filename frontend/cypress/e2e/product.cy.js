@@ -21,7 +21,7 @@ describe("Product E2E Tests (Sử dụng data-testid)", () => {
   // a) Test Create product flow (0.5 điểm)
   it("Nên tạo sản phẩm mới thành công (Create)", () => {
     productPage.clickAddNew();
-    productPage.openFormModal();
+    productPage.shouldModalBeVisible();
 
     productPage.fillProductForm(NEW_PRODUCT_DATA);
     productPage.submitForm();
@@ -48,7 +48,7 @@ describe("Product E2E Tests (Sử dụng data-testid)", () => {
   it("Nên cập nhật sản phẩm thành công (Update)", () => {
     // 1. Click nút Sửa
     productPage.clickEditButton(NEW_PRODUCT_DATA.name);
-    productPage.openFormModal();
+    productPage.shouldModalBeVisible();
 
     // 2. Cập nhật giá
     productPage.fillProductForm({
